@@ -43,7 +43,6 @@ public class WeightUnitConverterController extends SwingWorker<Double, String>{
 
 	@Override
 	protected Double doInBackground() throws Exception {
-		System.out.println("inbackground");
 		return service.convertWeight(value, fromUnit, toUnit);
 	}
 
@@ -56,10 +55,8 @@ public class WeightUnitConverterController extends SwingWorker<Double, String>{
 
 	@Override
 	protected void done() {
-		System.out.println("done");
 		try {
 			if(!this.isCancelled()){
-				System.out.println("IN NOT CANCEL");
 				gui.showResult(this.get()+"");
 			}
 		} catch (InterruptedException | ExecutionException e) {

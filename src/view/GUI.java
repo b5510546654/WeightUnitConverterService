@@ -118,7 +118,7 @@ public class GUI extends JFrame {
 			}
 		};
 
-		input.addKeyListener(keyListener);
+		JFrame.addKeyListener(keyListener);
 		button.addKeyListener(keyListener);
 		comboBox.addKeyListener(keyListener);
 		comboBox2.addKeyListener(keyListener);
