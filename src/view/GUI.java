@@ -20,6 +20,8 @@ import net.webservicex.WeightUnit;
 import controller.WeightUnitConverterController;
 /**
  * UI of this program.
+ * Receive data from user and sent it to service.
+ * Show result from response.
  * @author Rungroj Maipradit 5510546654
  */
 public class GUI extends JFrame {
@@ -118,7 +120,7 @@ public class GUI extends JFrame {
 			}
 		};
 
-		JFrame.addKeyListener(keyListener);
+		input.addKeyListener(keyListener);
 		button.addKeyListener(keyListener);
 		comboBox.addKeyListener(keyListener);
 		comboBox2.addKeyListener(keyListener);
