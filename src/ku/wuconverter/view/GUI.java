@@ -1,4 +1,4 @@
-package view;
+package ku.wuconverter.view;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -6,18 +6,22 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import ku.wuconverter.controller.WeightUnitConverterController;
 import net.webservicex.ConvertWeightsSoap;
 import net.webservicex.WeightUnit;
-import controller.WeightUnitConverterController;
 /**
  * UI of this program.
  * Receive data from user and sent it to service.
@@ -53,6 +57,8 @@ public class GUI extends JFrame {
 	private ConvertWeightsSoap service;
 	/** Contains Weight Converter. */
 	private WeightUnitConverterController worker;
+	/** Show Progress Bar. **/
+	private JProgressBar progressbar;
 	/**
 	 * Initialize component and set controller.
 	 * @param factory reference to weight unit converter.
@@ -83,6 +89,7 @@ public class GUI extends JFrame {
 		output.setPreferredSize(new Dimension(200,30));
 		output.setLineWrap(true);
 		output.setEditable(false);
+		progressbar = new JProgressBar();
 
 		getContentPane().setLayout(new BorderLayout());
 		getContentPane().add(top,BorderLayout.NORTH);
@@ -97,6 +104,7 @@ public class GUI extends JFrame {
 		mid.add(comboBox);
 		mid.add(to);
 		mid.add(comboBox2);
+		mid.add(progressbar);
 
 		bot.add(label2);
 		bot.add(output);
@@ -124,7 +132,7 @@ public class GUI extends JFrame {
 		button.addKeyListener(keyListener);
 		comboBox.addKeyListener(keyListener);
 		comboBox2.addKeyListener(keyListener);
-		
+
 		button.addActionListener(new ActionListener() {
 
 			@Override
@@ -133,6 +141,13 @@ public class GUI extends JFrame {
 			}
 		});
 
+	}
+
+	/**
+	 * Update progressBar.
+	 */
+	public void setProgressBar(int value){
+		progressbar.setValue(value);
 	}
 
 	/**

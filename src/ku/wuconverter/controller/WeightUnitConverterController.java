@@ -1,12 +1,15 @@
-package controller;
+package ku.wuconverter.controller;
 import java.util.List;
+import java.util.Timer;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import javax.swing.SwingWorker;
 
+import ku.wuconverter.view.GUI;
 import net.webservicex.ConvertWeightsSoap;
 import net.webservicex.WeightUnit;
-import view.GUI;
 
 /**
  * Use for sent value to service .
@@ -43,26 +46,26 @@ public class WeightUnitConverterController extends SwingWorker<Double, String>{
 
 	@Override
 	protected Double doInBackground() throws Exception {
+		gui.setProgressBar(50);
 		return service.convertWeight(value, fromUnit, toUnit);
-	}
-
-
-
-	@Override
-	protected void process(List<String> chunks) {
-		super.process(chunks);
 	}
 
 	@Override
 	protected void done() {
 		try {
 			if(!this.isCancelled()){
-				gui.showResult(this.get()+"");
+				gui.showResult(this.get(10, TimeUnit.SECONDS)+"");
+				gui.setProgressBar(100);
 			}
-		} catch (InterruptedException | ExecutionException e) {
+		} catch (InterruptedException | ExecutionException | TimeoutException e) {
 			gui.showResult("connection error");
+			gui.setProgressBar(0);
 			e.printStackTrace();
 		}
 	}
 
+	@Override
+	protected void process(List<String> chunks) {
+		super.process(chunks);
+	}
 }
