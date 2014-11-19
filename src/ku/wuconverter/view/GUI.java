@@ -6,9 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -161,7 +158,6 @@ public class GUI extends JFrame {
 		double value = Double.parseDouble(input.getText());
 		String from = comboBox.getSelectedItem().toString();
 		String to = comboBox2.getSelectedItem().toString();
-
 		worker = new WeightUnitConverterController(service, this);
 		worker.setValue(from, to, value);
 		worker.execute();
